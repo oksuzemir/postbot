@@ -1,0 +1,15 @@
+{
+  "name": "Template Exporter",
+  "id": "com.oksuzemir.template-exporter",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "ui.html",
+  "editorType": ["figma", "dev"],
+  "networkAccess": {
+    "allowedDomains": [
+      "https://raw.githubusercontent.com",
+      "https://upload.wikimedia.org",
+      "https://api.football-data.org"
+    ]
+  }
+}

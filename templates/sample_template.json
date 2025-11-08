@@ -1,0 +1,14 @@
+{
+  "template_id": "sample_player_card",
+  "version": 1,
+  "size": { "w": 800, "h": 800 },
+  "fonts": [],
+  "layers": [
+    { "type": "image", "name": "player_photo", "key": "PLAYER_PHOTO", "x": 50, "y": 50, "w": 300, "h": 300, "shape": "circle", "isEllipse": true },
+    { "type": "text", "name": "player_name", "key": "PLAYER_NAME", "x": 380, "y": 80, "w": 360, "h": 80, "font": { "size": 36 }, "originalText": "{{PLAYER_NAME}}" },
+    { "type": "text", "name": "goals", "key": "GOALS", "x": 380, "y": 160, "w": 360, "h": 40, "font": { "size": 28 }, "originalText": "{{GOALS}}" }
+  ],
+  "metadata": {},
+  "backgroundImage": "",
+  "neonBorder": false
+}

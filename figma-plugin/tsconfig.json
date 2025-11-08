@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ES2019", "DOM"],
+    "strict": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
+    "types": ["@figma/plugin-typings"],
+    "skipLibCheck": true,
+    "outDir": "dist", // derleme çıktısını ayrı klasöre yaz
+    "rootDir": ".",
+    "noEmitOnError": false
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", "dist", "out", "build"]
+}

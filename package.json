@@ -1,0 +1,22 @@
+{
+  "name": "postbot-renderer",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/renderer.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "render": "node scripts/render.js --template templates/sample_template.json --mapping examples/mapping.json --out out.png",
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "puppeteer-core": "^20.9.0",
+    "sharp": "^0.32.0",
+    "minimist": "^1.2.8",
+  "bullmq": "^5.63.0",
+    "ioredis": "^5.3.2",
+    "@aws-sdk/client-s3": "^3.400.0"
+  }
+}

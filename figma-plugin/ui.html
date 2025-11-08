@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Apply Image Mapping</title>
+    <style>
+      body {
+        font-family: Inter, system-ui, -apple-system;
+        margin: 12px;
+        color: #222;
+      }
+      textarea {
+        width: 100%;
+        height: 220px;
+        box-sizing: border-box;
+        font-family: monospace;
+        padding: 8px;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #f6f6f6;
+        cursor: pointer;
+      }
+      button.primary {
+        background: #2b8cff;
+        color: #fff;
+        border-color: #2b8cff;
+      }
+      .note {
+        margin-top: 8px;
+        color: #555;
+        font-size: 13px;
+      }
+      .small {
+        font-size: 12px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Apply Image Mapping</h3>
+    <div class="small">
+      Paste mapping JSON and click "Apply to selection". Images will be applied
+      directly as fills (scaleMode: "FILL"). The plugin does NOT do any
+      client-side cropping. If a layer is named starting with "IMG_" the plugin
+      will try to match mapping keys to that layer and apply the image. The
+      exported template preserves cornerRadius/cornerRadii and an
+      isEllipse/shape flag so your renderer can draw rounded or circular images
+      the same way.
+    </div>
+    <textarea
+      id="mapping"
+      placeholder='{"IMG_AVATAR":"data:image/png;base64,...", "IMG_FLAG":"data:image/png;base64,..."}'
+    ></textarea>
+    <div class="controls">
+      <button id="applyBtn" class="primary">Apply to selection</button>
+      <button id="exportBtn">Export selected frame</button>
+      <button id="saveBtn">Save JSON to storage</button>
+      <button id="closeBtn">Close</button>
+    </div>
+    <div class="note">
+      No extra crop UI — the plugin uses scaleMode: "FILL" so the image is
+      centered and cropped by Figma. Corner radius / ellipse shapes are
+      preserved by exporting cornerRadius/cornerRadii and shape/isEllipse fields
+      in the template.
+    </div>
+
+    <div style="margin-top: 12px">
+      <div style="margin-bottom: 6px"><strong>Export result</strong></div>
+      <textarea
+        id="jsonArea"
+        readonly
+        placeholder="Template JSON will appear here..."
+        style="height: 220px"
+      ></textarea>
+      <div class="controls" style="margin-top: 8px">
+        <button id="copyBtn">Copy JSON</button>
+        <button id="downloadBtn">Download JSON</button>
+      </div>
+    </div>
+
+    <script>
+      const mappingEl = document.getElementById("mapping");
+      const applyBtn = document.getElementById("applyBtn");
+      const exportBtn = document.getElementById("exportBtn");
+      const saveBtn = document.getElementById("saveBtn");
+      const closeBtn = document.getElementById("closeBtn");
+      const jsonArea = document.getElementById("jsonArea");
+      const copyBtn = document.getElementById("copyBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      // When user clicks "Apply to selection" we send the raw mapping JSON to the plugin code.
+      // The plugin (main thread) will:
+      // - match mapping keys to selected layers (loose matching, supports IMG_ prefixes)
+      // - create images from the data URLs and set node.fills = [ImagePaint] with scaleMode:'FILL'
+      // - if fills cannot be set (instance/locked), plugin will create an overlay rectangle/ellipse with same corner radius
+      applyBtn.onclick = () => {
+        const txt = mappingEl.value;
+        parent.postMessage(
+          { pluginMessage: { type: "apply-mapping", mapping: txt } },
+          "*"
+        );
+      };
+
+      exportBtn.onclick = () =>
+        parent.postMessage({ pluginMessage: { type: "export-template" } }, "*");
+
+      saveBtn.onclick = () =>
+        parent.postMessage(
+          {
+            pluginMessage: { type: "save-to-storage", payload: jsonArea.value },
+          },
+          "*"
+        );
+
+      closeBtn.onclick = () =>
+        parent.postMessage({ pluginMessage: { type: "close-plugin" } }, "*");
+
+      copyBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(jsonArea.value);
+          alert("Copied");
+        } catch {
+          jsonArea.select();
+          document.execCommand("copy");
+          alert("Copied (fallback)");
+        }
+      };
+
+      downloadBtn.onclick = () => {
+        const data = jsonArea.value;
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "template.json";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      };
+
+      // Listen messages from plugin main code (template JSON or errors)
+      window.onmessage = (event) => {
+        const msg = event.data && event.data.pluginMessage;
+        if (!msg) return;
+        if (msg.type === "template-json") {
+          jsonArea.value = msg.payload || "";
+          jsonArea.scrollTop = 0;
+        } else if (msg.type === "export-error") {
+          jsonArea.value = "ERROR:\n" + msg.payload;
+        }
+      };
+
+      // Ask plugin for last saved template when UI opens
+      parent.postMessage(
+        { pluginMessage: { type: "request-last-storage" } },
+        "*"
+      );
+    </script>
+  </body>
+</html>

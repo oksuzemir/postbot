@@ -1,0 +1,13 @@
+{
+  "name": "template-exporter",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.117.1",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -w -p ."
+  }
+}

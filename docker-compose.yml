@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  renderer:
+    build: .
+    environment:
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chrome
+    volumes:
+      - ./:/usr/src/app
+    command: ["node", "scripts/ci_check.js"]
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  worker:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chrome
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - redis
+    command: ["node", "scripts/start_worker.js"]

@@ -1,0 +1,32 @@
+name: CI - Render Smoke Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  render-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install Chrome for tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg
+          CHROME_VERSION=115.0.5790.98
+          wget -q -O /tmp/chrome.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.98/linux64/chrome-linux64.zip
+          sudo apt-get install -y unzip
+          sudo unzip /tmp/chrome.zip -d /usr/local/
+          sudo ln -s /usr/local/chrome-linux64/chrome /usr/bin/chrome || true
+      - name: Run CI render smoke check
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chrome
+        run: node scripts/ci_check.js
