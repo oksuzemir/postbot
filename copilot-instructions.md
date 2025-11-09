@@ -1,4 +1,4 @@
-Files changed in this session: `admin/src/RenderPlayer.jsx`, `src/services/server_impl.js`, `scripts/start_all.sh`, `README.md`, `copilot-instructions.md`
+Files changed in this session: `admin/src/RenderPlayer.jsx`, `admin/src/pages/ApiPage.jsx`, `admin/src/pages/RendererPage.jsx`, `admin/src/App.jsx`, `admin/src/styles.css`, `src/services/server_impl.js`, `scripts/start_all.sh`, `README.md`, `copilot-instructions.md`
 
 ## How I tested this (short)
 
@@ -134,6 +134,20 @@ The following is a precise timeline of work performed in this session (commands 
  - 2025-11-09T03:18:20+03:00 | assistant | Updated `.github/workflows/render-containerized.yml` to start a detached helper container (sleep), wait for Chrome readiness via `scripts/wait_for_docker_health.sh`, then run the one-off render and upload the PNG. This avoids race conditions and gives better logs for debugging.
  - 2025-11-09T03:42:00+03:00 | assistant | Added Admin UI "Render Player Details" page: updated `admin/src/App.jsx` to include navigation, a templates list (GET `/templates`), import/save template (POST `/templates`), delete template (DELETE `/templates/:name`), and an in-panel render that posts the template JSON to `/render/admin-static` and displays the returned PNG.
  - 2025-11-09T03:42:00+03:00 | assistant | Extended server API (`src/services/server_impl.js`) to support templates management endpoints: GET `/templates`, POST `/templates`, DELETE `/templates/:name`, and allowed `/render/admin-static` to accept `template` in request body for ad-hoc renders.
+
+ - 2025-11-10T09:30:00+03:00 | assistant | Moved API preview UI out of `admin/src/RenderPlayer.jsx` and replaced it with a short notice directing users to the API Console page. File edited: `admin/src/RenderPlayer.jsx`.
+ - 2025-11-10T09:31:00+03:00 | assistant | Implemented full API Console page with preview and mock-management at `admin/src/pages/ApiPage.jsx`. Features: API URL input, Presets select, Headers JSON input with validation, Fetch preview (proxy to `/fetch-proxy`), preview source tracking (live/mock), saved mocks CRUD (GET `/mocks`, POST/PUT/DELETE), mock load into preview, render-from-data integration hooks, and notifications.
+ - 2025-11-10T09:32:00+03:00 | assistant | Ran Jest test suite after initial UI moves: `npm test` — result: all tests passed.
+ - 2025-11-10T09:33:00+03:00 | assistant | Polished API Console UI: added inline headers JSON parse error helper text, CircularProgress indicator while fetching, copy-to-clipboard for preview JSON, improved error handling and notifications. File edited: `admin/src/pages/ApiPage.jsx`.
+ - 2025-11-10T09:34:00+03:00 | assistant | Made the admin UI full-bleed by removing the `.app` max-width constraint and adding `main` padding for comfortable spacing. File edited: `admin/src/styles.css`.
+ - 2025-11-10T09:35:00+03:00 | assistant | Simplified header: removed API key input + Save button from `admin/src/App.jsx` (header), centered nav buttons while keeping the logo/title on the left. Moved API key management into the API Console page.
+ - 2025-11-10T09:36:00+03:00 | assistant | Made the AppBar `position="fixed"`, added a dense `Toolbar` spacer to offset content, and added an active nav underline style for the current route. File edited: `admin/src/App.jsx`.
+ - 2025-11-10T09:37:00+03:00 | assistant | Added API key Save and Clear controls to `admin/src/pages/ApiPage.jsx`. Saving uses `setApiKey()` (updates localStorage), clearing prompts for confirmation via `showConfirm` and then clears the key. File edited: `admin/src/pages/ApiPage.jsx`.
+ - 2025-11-10T09:38:00+03:00 | assistant | Fixed layout overflow on the API page: removed `height:100vh` from the ApiPage root container, changed the preview box from fixed `height` to `maxHeight` with `overflow:auto` so long preview payloads don't push controls off-screen. File edited: `admin/src/pages/ApiPage.jsx`.
+ - 2025-11-10T09:39:00+03:00 | assistant | Made API Console controls responsive: inputs and buttons now stack on xs breakpoints and use responsive widths (full-width on xs). File edited: `admin/src/pages/ApiPage.jsx`.
+ - 2025-11-10T09:40:00+03:00 | assistant | Applied responsive polish to `admin/src/RenderPlayer.jsx` and `admin/src/pages/RendererPage.jsx`: controls and buttons stack on small screens and use full-width where appropriate to avoid overflow or UI elements being pushed under containers.
+ - 2025-11-10T09:41:00+03:00 | assistant | Re-ran Jest tests after responsive changes: `npm test` — result: all tests passed.
+ 
 
 Notes about worker lifecycle and signals
  - Host-run worker behavior: when running `node scripts/start_worker.js` from the host terminal the worker sometimes receives `SIGINT` from the shell session and exits; this is environment-specific and unrelated to BullMQ. Using Docker isolates the worker from those host signals and is recommended for local/CI testing.
