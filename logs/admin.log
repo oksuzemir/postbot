@@ -3,7 +3,379 @@
 > vite
 
 
-  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m177[22m[2m[0m ms[22m
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m212[22m[2m[0m ms[22m
 
   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
 [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m00:30:06[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:30:09[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33m@mui/material/Select, @mui/material/MenuItem[32m[39m
+[2m00:30:09[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m00:30:16[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:30:34[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:31:41[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:31:43[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:31:48[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:31:54[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:32:43[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:33:54[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:34:05[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:34:16[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:34:47[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:36:07[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:36:20[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:36:32[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:48:29[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m00:49:02[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m00:49:02[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m00:49:02[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/TemplatesPage.jsx[22m
+[2m00:49:02[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/RendererPage.jsx[22m
+[2m00:49:02[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/WorkflowPage.jsx[22m
+[2m00:51:47[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:53:01[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m00:53:25[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m00:53:25[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m00:55:22[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m00:55:23[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33m@mui/icons-material/ContentCopy[32m[39m
+[2m00:55:23[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m00:55:57[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m00:57:46[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles.css[22m
+[2m01:00:30[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:00:39[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:00:50[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:00:51[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles.css[22m
+[2m01:00:51[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:01:50[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:01:56[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:02:13[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:02:14[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:05:09[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:05:46[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:06:45[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:07:08[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:08:03[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/ApiPage.jsx[22m
+[2m01:08:03[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:08:49[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:08:49[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:08:49[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:08:49[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:485:4
+[33m  
+  [33mExpected ")" but found "{"[33m
+  483|        <CardActions />
+  484|      </Card>
+  485|      {/* Drawer for small screens: contains the right-column controls */}
+     |      ^
+  486|      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+  487|        <Box sx={{width:360, p:2}} role="presentation">
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:09:24[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/RendererPage.jsx[22m
+[2m01:09:25[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:09:25[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:485:4
+[33m  
+  [33mExpected ")" but found "{"[33m
+  483|        <CardActions />
+  484|      </Card>
+  485|      {/* Drawer for small screens: contains the right-column controls */}
+     |      ^
+  486|      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+  487|        <Box sx={{width:360, p:2}} role="presentation">
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:09:35[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:09:35[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/RendererPage.jsx[22m
+[2m01:09:36[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:09:36[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:09:36[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:485:4
+[33m  
+  [33mExpected ")" but found "{"[33m
+  483|        <CardActions />
+  484|      </Card>
+  485|      {/* Drawer for small screens: contains the right-column controls */}
+     |      ^
+  486|      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+  487|        <Box sx={{width:360, p:2}} role="presentation">
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:10:21[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:10:22[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag
+[2m01:10:22[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag
+[2m01:10:22[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:538:6
+[33m  
+  [33mUnexpected closing "Drawer" tag does not match opening "Box" tag[33m
+  536|            </Box>
+  537|        </Box>
+  538|      </Drawer>
+     |        ^
+  539|      </>
+  540|    )
+  
+  [33mUnexpected closing fragment tag does not match opening "Drawer" tag[33m
+  537|        </Box>
+  538|      </Drawer>
+  539|      </>
+     |        ^
+  540|    )
+  541|  }
+  
+  [33mUnexpected end of file before a closing fragment tag[33m
+  541|  }
+  542|  }
+  543|  
+     |  ^
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:10:31[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:10:31[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:10:31[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:10:31[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:485:4
+[33m  
+  [33mExpected ")" but found "{"[33m
+  483|        <CardActions />
+  484|      </Card>
+  485|      {/* Drawer for small screens: contains the right-column controls */}
+     |      ^
+  486|      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+  487|        <Box sx={{width:360, p:2}} role="presentation">
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:10:40[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:10:41[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag
+[2m01:10:41[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag
+[2m01:10:41[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:538:6
+[33m  
+  [33mUnexpected closing "Drawer" tag does not match opening "Box" tag[33m
+  536|            </Box>
+  537|        </Box>
+  538|      </Drawer>
+     |        ^
+  539|      </>
+  540|    )
+  
+  [33mUnexpected closing fragment tag does not match opening "Drawer" tag[33m
+  537|        </Box>
+  538|      </Drawer>
+  539|      </>
+     |        ^
+  540|    )
+  541|  }
+  
+  [33mUnexpected end of file before a closing fragment tag[33m
+  541|  }
+  542|  }
+  543|  
+     |  ^
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:10:41[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:10:42[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:10:42[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"
+[2m01:10:42[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:485:4: ERROR: Expected ")" but found "{"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:485:4
+[33m  
+  [33mExpected ")" but found "{"[33m
+  483|        <CardActions />
+  484|      </Card>
+  485|      {/* Drawer for small screens: contains the right-column controls */}
+     |      ^
+  486|      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+  487|        <Box sx={{width:360, p:2}} role="presentation">
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:10:59[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:11:00[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag
+[2m01:11:00[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag
+[2m01:11:00[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:538:6: ERROR: Unexpected closing "Drawer" tag does not match opening "Box" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:539:6: ERROR: Unexpected closing fragment tag does not match opening "Drawer" tag
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected end of file before a closing fragment tag[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:538:6
+[33m  
+  [33mUnexpected closing "Drawer" tag does not match opening "Box" tag[33m
+  536|            </Box>
+  537|        </Box>
+  538|      </Drawer>
+     |        ^
+  539|      </>
+  540|    )
+  
+  [33mUnexpected closing fragment tag does not match opening "Drawer" tag[33m
+  537|        </Box>
+  538|      </Drawer>
+  539|      </>
+     |        ^
+  540|    )
+  541|  }
+  
+  [33mUnexpected end of file before a closing fragment tag[33m
+  541|  }
+  542|  }
+  543|  
+     |  ^
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:11:21[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:11:22[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected "}"
+[2m01:11:22[22m [31m[1m[vite][22m[39m Pre-transform error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected "}"
+[2m01:11:22[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+C:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx:543:0: ERROR: Unexpected "}"[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36mC:/Users/USER/Documents/GitHub/postbot/admin/src/RenderPlayer.jsx[39m:543:0
+[33m  
+  [33mUnexpected "}"[33m
+  541|    )
+  542|  }
+  543|  }
+     |  ^
+  544|  
+  [39m
+      at failureErrorWithLog (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:1472:15)
+      at C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:755:50
+      at responseCallbacks.<computed> (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:622:9)
+      at handleIncomingPacket (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:677:12)
+      at Socket.readFromStdout (C:\Users\USER\Documents\GitHub\postbot\admin\node_modules\esbuild\lib\main.js:600:7)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+[2m01:11:30[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:11:31[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:11:32[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33m@mui/material/Drawer, @mui/icons-material/Menu[32m[39m
+[2m01:11:32[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m01:12:36[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:12:43[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:13:01[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:13:01[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:14:04[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/RendererPage.jsx[22m
+[2m01:14:04[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:14:04[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m01:15:02[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:15:12[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/RendererPage.jsx[22m
+[2m01:16:08[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/RenderPlayer.jsx[22m
+[2m01:16:08[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/pages/RendererPage.jsx[22m

@@ -1,18 +1,7 @@
 Waiting for Redis at 127.0.0.1:6379...
-Redis is available — starting worker
-[worker] startWorker() called — building Worker for queue render-jobs
-Render worker started for queue render-jobs
-[worker] uncaughtException Error: listen EADDRINUSE: address already in use :::9646
-    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
-    at listenInCluster (node:net:1997:12)
-    at Server.listen (node:net:2102:7)
-    at startWorker (C:\Users\USER\Documents\GitHub\postbot\src\workers\queue_impl.js:207:18)
-    at C:\Users\USER\Documents\GitHub\postbot\scripts\start_worker.js:11:18
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-[start_worker] uncaughtException Error: listen EADDRINUSE: address already in use :::9646
-    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
-    at listenInCluster (node:net:1997:12)
-    at Server.listen (node:net:2102:7)
-    at startWorker (C:\Users\USER\Documents\GitHub\postbot\src\workers\queue_impl.js:207:18)
-    at C:\Users\USER\Documents\GitHub\postbot\scripts\start_worker.js:11:18
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Could not start worker — Redis unavailable Error: Redis not available
+    at Socket.<anonymous> (C:\Users\USER\Documents\GitHub\postbot\scripts\wait-for-redis.js:16:48)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)

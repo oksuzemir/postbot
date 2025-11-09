@@ -18,6 +18,18 @@ const app = express();
 app.use(express.json({ limit: '5mb' }));
 app.use(cors());
 
+// Load server-side API presets from env (JSON string). Presets store header name+value
+// Example .env: API_PRESETS='{"paidApi":{"header":"Authorization","value":"Bearer ..."}}'
+let API_PRESETS = {};
+try {
+  if (process.env.API_PRESETS) {
+    API_PRESETS = JSON.parse(process.env.API_PRESETS);
+  }
+} catch (e) {
+  console.warn('Failed to parse API_PRESETS from env; ignoring', e && e.message);
+  API_PRESETS = {};
+}
+
 // Development request logger to help diagnose whether browser requests reach the server.
 app.use((req, res, next) => {
   try {
@@ -27,6 +39,16 @@ app.use((req, res, next) => {
   }
   next()
 })
+
+// Return available API preset names and header keys (do NOT return secret values)
+app.get('/api-presets', checkApiKey, (req, res) => {
+  try {
+    const out = Object.keys(API_PRESETS || {}).map(k => ({ name: k, header: API_PRESETS[k] && API_PRESETS[k].header ? API_PRESETS[k].header : null }));
+    return res.json({ presets: out });
+  } catch (e) {
+    return res.status(500).json({ error: String(e) });
+  }
+});
 
 // Simple unauthenticated debug ping for front-end diagnostics. Returns a small payload
 // including the Origin header and remote address so the browser can confirm reachability.
@@ -116,6 +138,75 @@ app.post('/render/admin-static', checkApiKey, async (req, res) => {
     return res.send(png);
   } catch (e) {
     console.error('[render/admin-static] failed', e);
+    return res.status(500).json({ error: String(e) });
+  }
+});
+
+// Render directly from fetched JSON data using a mapping spec (synchronous)
+// Body: { template, data, mappingSpec? }
+app.post('/render/from-data', checkApiKey, async (req, res) => {
+  try {
+    const { template, data, mappingSpec } = req.body || {};
+    if (!template) return res.status(400).json({ error: 'template required' });
+    if (!data) return res.status(400).json({ error: 'data required' });
+
+    // helper: get nested value by dot path
+    function getByPath(obj, p) {
+      if (!p) return undefined;
+      const parts = String(p).split('.');
+      let cur = obj;
+      for (const part of parts) {
+        if (cur == null) return undefined;
+        cur = cur[part];
+      }
+      return cur;
+    }
+
+    // Convert external image URL to data URL (server-side)
+    async function urlToDataUrl(url) {
+      if (!url || typeof url !== 'string') return null;
+      try {
+        const r = await axios.get(url, { responseType: 'arraybuffer' });
+        const ct = r.headers['content-type'] || 'image/png';
+        const b64 = Buffer.from(r.data, 'binary').toString('base64');
+        return `data:${ct};base64,${b64}`;
+      } catch (e) {
+        console.error('[render/from-data] failed to fetch image', url, e && e.message);
+        return null;
+      }
+    }
+
+    const defaultSpec = mappingSpec || {
+      PLAYER_NAME: 'name',
+      POSITION: 'position',
+      OVERALL: 'overall',
+      PACE: 'pace',
+      DRIBBLING: 'dribbling',
+      SHOOTING: 'shooting',
+      DEFENCE: 'defence',
+      PASSING: 'passing',
+      PHYSICAL: 'physical',
+      IMG_AVATAR: 'avatar_url'
+    };
+
+    const mapping = {};
+    for (const [token, pathStr] of Object.entries(defaultSpec)) {
+      const v = getByPath(data, pathStr);
+      if (v == null) continue;
+      if (typeof v === 'string' && /^https?:\/\//i.test(v) && String(token).toUpperCase().startsWith('IMG')) {
+        const du = await urlToDataUrl(v);
+        if (du) mapping[token] = du;
+      } else {
+        mapping[token] = String(v);
+      }
+    }
+
+    // Render and return PNG
+    const png = await renderFromTemplate(template, mapping);
+    res.set('Content-Type', 'image/png');
+    return res.send(png);
+  } catch (e) {
+    console.error('[render/from-data] failed', e);
     return res.status(500).json({ error: String(e) });
   }
 });
@@ -270,6 +361,166 @@ app.post('/enqueue/from-api', checkApiKey, async (req, res) => {
 
 // Job status endpoint: GET /jobs/:id
 // Job status endpoint: GET /jobs/:id
+
+// Simple in-memory cache for fetch-proxy results (keyed by url+headers)
+const fetchCache = new Map();
+const FETCH_CACHE_TTL = Math.max(0, parseInt(process.env.FETCH_CACHE_TTL || '60', 10));
+
+// Proxy endpoint to fetch remote APIs server-side (prevents exposing API keys to the browser)
+// Request body: { apiUrl, headers?, useMock?, mockName?, forceFetch? }
+app.post('/fetch-proxy', checkApiKey, async (req, res) => {
+  try {
+    const { apiUrl, headers, useMock, mockName, forceFetch, presetName } = req.body || {};
+
+    // If caller explicitly requested a mock, return it from examples/mocks
+    if (useMock) {
+      if (!mockName) return res.status(400).json({ ok: false, error: 'mockName required when useMock is true' });
+      const mockPath = path.resolve('examples', 'mocks', mockName);
+      try {
+        const raw = await fs.readFile(mockPath, 'utf8');
+        return res.json({ ok: true, source: 'mock', data: JSON.parse(raw) });
+      } catch (e) {
+        return res.status(404).json({ ok: false, error: 'mock not found: ' + mockName });
+      }
+    }
+
+    if (!apiUrl) return res.status(400).json({ ok: false, error: 'apiUrl is required' });
+
+    // Merge preset header (server-side) if requested. Do not log secret values.
+    let mergedHeaders = Object.assign({}, headers || {});
+    if (presetName && API_PRESETS && API_PRESETS[presetName]) {
+      const preset = API_PRESETS[presetName];
+      if (preset && preset.header && preset.value) {
+        mergedHeaders[preset.header] = preset.value;
+        console.log('[fetch-proxy] using preset', presetName);
+      }
+    }
+
+    // For cache key, avoid embedding secret values. Use presetName marker instead.
+    const cacheKeyHeaders = Object.assign({}, headers || {});
+    if (presetName) cacheKeyHeaders.__preset = presetName;
+    const cacheKey = apiUrl + '|' + JSON.stringify(cacheKeyHeaders || {});
+    if (!forceFetch && FETCH_CACHE_TTL > 0 && fetchCache.has(cacheKey)) {
+      const entry = fetchCache.get(cacheKey);
+      if (Date.now() - entry.ts < FETCH_CACHE_TTL * 1000) {
+        return res.json({ ok: true, source: 'cache', data: entry.data });
+      }
+      fetchCache.delete(cacheKey);
+    }
+
+    // Fetch the remote API JSON
+    const axiosCfg = {
+      method: 'get',
+      url: apiUrl,
+      headers: mergedHeaders || {},
+      responseType: 'json',
+      timeout: parseInt(process.env.FETCH_TIMEOUT_MS || '15000', 10),
+      maxContentLength: parseInt(process.env.FETCH_MAX_BYTES || String(10 * 1024 * 1024), 10)
+    };
+    const resp = await axios(axiosCfg);
+    const data = resp && resp.data !== undefined ? resp.data : null;
+
+    // Cache the response for a short period to avoid repeated paid API calls
+    try {
+      if (FETCH_CACHE_TTL > 0) fetchCache.set(cacheKey, { ts: Date.now(), data });
+    } catch (e) {
+      // ignore cache-set failures
+    }
+
+    return res.json({ ok: true, source: 'live', data });
+  } catch (e) {
+    console.error('[fetch-proxy] failed', e && e.stack ? e.stack : e);
+    return res.status(500).json({ ok: false, error: String(e) });
+  }
+});
+
+// CRUD for saved mocks used for development/testing
+// POST /mocks  { name, json } -> saves examples/mocks/<name>.json
+app.post('/mocks', checkApiKey, async (req, res) => {
+  try {
+    const { name, json } = req.body || {};
+    if (!name || !json) return res.status(400).json({ error: 'name and json required' });
+    const base = path.basename(name).replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+    const filename = base.toLowerCase().endsWith('.json') ? base : `${base}.json`;
+    const dir = path.resolve('examples', 'mocks');
+    await fs.mkdir(dir, { recursive: true });
+    const full = path.join(dir, filename);
+    await fs.writeFile(full, JSON.stringify(json, null, 2), 'utf8');
+    return res.json({ saved: filename });
+  } catch (e) {
+    console.error('Save mock failed', e);
+    return res.status(500).json({ error: String(e) });
+  }
+});
+
+app.get('/mocks', checkApiKey, async (req, res) => {
+  try {
+    const dir = path.resolve('examples', 'mocks');
+    const files = await fs.readdir(dir).catch(() => []);
+    const out = files.filter(f => f.toLowerCase().endsWith('.json'));
+    return res.json({ mocks: out });
+  } catch (e) {
+    console.error('List mocks failed', e);
+    return res.status(500).json({ error: String(e) });
+  }
+});
+
+app.get('/mocks/:name', checkApiKey, async (req, res) => {
+  try {
+    const name = req.params.name;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const filename = path.basename(name);
+    const full = path.resolve('examples', 'mocks', filename);
+    const raw = await fs.readFile(full, 'utf8');
+    return res.json({ json: JSON.parse(raw) });
+  } catch (e) {
+    console.error('Get mock failed', e);
+    return res.status(404).json({ error: 'mock not found', detail: String(e) });
+  }
+});
+
+// Delete a mock: DELETE /mocks/:name
+app.delete('/mocks/:name', checkApiKey, async (req, res) => {
+  try {
+    const name = req.params.name;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const filename = path.basename(name);
+    const full = path.resolve('examples', 'mocks', filename);
+    await fs.unlink(full);
+    return res.json({ deleted: filename });
+  } catch (e) {
+    console.error('Delete mock failed', e);
+    return res.status(500).json({ error: 'delete failed', detail: String(e) });
+  }
+});
+
+// Update a mock: PUT /mocks/:name  body: { newName?, json? }
+app.put('/mocks/:name', checkApiKey, async (req, res) => {
+  try {
+    const name = req.params.name;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const filename = path.basename(name);
+    const full = path.resolve('examples', 'mocks', filename);
+
+    const { newName, json } = req.body || {};
+    // If json provided, overwrite contents
+    if (json !== undefined) {
+      await fs.writeFile(full, JSON.stringify(json, null, 2), 'utf8');
+    }
+    // If newName provided, rename file
+    if (newName) {
+      const base = path.basename(newName).replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+      const newFilename = base.toLowerCase().endsWith('.json') ? base : `${base}.json`;
+      const newFull = path.resolve('examples', 'mocks', newFilename);
+      await fs.rename(full, newFull);
+      return res.json({ renamed: { from: filename, to: newFilename } });
+    }
+    return res.json({ updated: filename });
+  } catch (e) {
+    console.error('Update mock failed', e);
+    return res.status(500).json({ error: 'update failed', detail: String(e) });
+  }
+});
 app.get('/jobs/:id', checkApiKey, async (req, res) => {
   try {
     const id = req.params.id;

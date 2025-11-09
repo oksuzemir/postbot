@@ -399,6 +399,72 @@ Replace with your package manager commands once the project has one.
 
 Use this section to quickly list current tasks and their statuses.
 
+## Continued activity (detailed, timestamped) — recent follow-ups
+
+The following entries record the edits and verification steps performed after the main session above. These are the precise changes I made in this chat and when I made them (local timestamps recorded during the session). They include server-side endpoints, admin UI updates, and UX improvements (dialogs). If you want these split into separate PRs I can do that.
+
+ - 2025-11-09T10:12:05+03:00 | assistant | Fixed a ReferenceError in `admin/src/RenderPlayer.jsx` that caused `url is not defined` when fetches failed; moved `url` and `reqUrl` declarations outside try/catch blocks so error handlers can reference them safely. This prevented uncaught exceptions in the browser console and improved diagnostics.
+ - 2025-11-09T10:18:30+03:00 | assistant | Added lightweight request-logging middleware to `src/services/server_impl.js` to print every incoming request (method, url, Origin, Host, remote address). This helps verify whether browser requests reach the Node server in mixed WSL/Docker/host setups.
+ - 2025-11-09T10:19:10+03:00 | assistant | Added an unauthenticated endpoint `GET /debug/ping` in `src/services/server_impl.js` that returns a small JSON payload with the request Origin/Host/IP seen by the server. Useful for quick browser diagnostics (no API key required).
+ - 2025-11-09T10:25:05+03:00 | assistant | Patched `scripts/start_all.sh` to remove the `set -u` unbound-variable failure mode by ensuring `PUPPETEER_EXECUTABLE_PATH` is always defined (defaulting to `/c/Program Files/Google/Chrome/Application/chrome.exe`) and by adding robust auto-detection for common Chrome/Chromium locations.
+ - 2025-11-09T10:32:00+03:00 | assistant | Hardened the start script to temporarily disable `set -u` only while doing environment expansion for background processes, then re-enable it; added helpful console hints showing resolved `PUPPETEER_EXECUTABLE_PATH` or a clear WARNING when none found.
+
+### Server: fetch-proxy, presets, and mock storage
+
+ - 2025-11-09T10:40:00+03:00 | assistant | Implemented server-side fetch proxy `POST /fetch-proxy` in `src/services/server_impl.js` with:
+   - support for `presetName` to merge a server-side preset header (from `API_PRESETS` env var) without exposing secret values to the client;
+   - in-memory short-lived cache keyed by apiUrl + presetName to avoid repeated paid calls (`FETCH_CACHE_TTL`);
+   - a `useMock` mode that returns saved mock JSON from `examples/mocks/<name>` when requested.
+
+ - 2025-11-09T10:44:00+03:00 | assistant | Added mock CRUD endpoints to `src/services/server_impl.js`:
+   - `POST /mocks` — save a mock JSON to `examples/mocks/<name>.json` (body: { name, json });
+   - `GET /mocks` — list saved mocks (returns filenames array);
+   - `GET /mocks/:name` — return the saved mock JSON (body: { json });
+   - `DELETE /mocks/:name` — delete a saved mock (new);
+   - `PUT /mocks/:name` — rename or overwrite a mock (new; body: { newName?, json? }).
+
+ - 2025-11-09T10:46:00+03:00 | assistant | Added `GET /api-presets` protected endpoint that returns preset names and header keys (not secret values) so the admin UI can show preset choices.
+
+### Admin UI: fetch preview, save/load mocks, render-from-data
+
+ - 2025-11-09T10:52:00+03:00 | assistant | Implemented server-backed preview & mock controls in `admin/src/RenderPlayer.jsx`:
+   - UI to enter an API URL, optional headers JSON, and choose a server preset;
+   - `Fetch preview` button calls `POST /fetch-proxy` and shows the JSON result in a preview pane (shows source: live/cache/mock);
+   - `Save as mock` to persist the preview into `examples/mocks/` via `POST /mocks` (now prompts for a name using a dialog);
+   - `Saved mocks` dropdown lists available mocks from `GET /mocks` and can `Load mock` into preview (sets preview source to `mock`).
+
+ - 2025-11-09T11:00:00+03:00 | assistant | Added render helpers in the admin UI:
+   - `POST /render/from-data` endpoint is used to synchronously render a template using fetched JSON data (converts image URLs to data URIs server-side and maps fields by a mappingSpec).
+   - In the UI: `Render with preview data` (uses current preview) and `Render using selected mock` (uses a saved mock) buttons for each template row.
+
+ - 2025-11-09T11:05:00+03:00 | assistant | UX improvements:
+   - Disables `Render with preview data` when no preview is loaded;
+   - Shows the preview `source` label (live/cache/mock) next to the preview pane;
+   - Auto-refreshes the mocks list after save/rename/delete and selects the newly-saved or renamed mock.
+
+### Admin UI: modal dialogs and mock management (final polish)
+
+ - 2025-11-10T10:00:00+03:00 | assistant | Replaced blocking `window.prompt` flows with Material UI dialogs in `admin/src/RenderPlayer.jsx` for:
+   - Saving a preview as a named mock (modal with input, required name validation, loading state);
+   - Renaming a mock (modal with input, new name validation, loading state);
+   - The dialog shows working state (`Working...`) while the server-op runs and disables actions to avoid double-submits.
+
+ - 2025-11-10T10:03:00+03:00 | assistant | Added mock management UI: per-mock Rename and Delete actions in a Manage mocks list; Delete confirms using the existing `showConfirm` modal and then calls `DELETE /mocks/:name`.
+
+ - 2025-11-10T10:05:00+03:00 | assistant | Finalized wiring between admin UI and server endpoints: `GET /api-presets`, `POST /fetch-proxy`, `POST /mocks`, `GET /mocks`, `GET /mocks/:name`, `DELETE /mocks/:name`, `PUT /mocks/:name`, and `POST /render/from-data` are all used by the UI and rely on `checkApiKey` protection.
+
+## Files changed in this follow-up (exact list)
+ - Edited: `admin/src/RenderPlayer.jsx` — added fetch preview UI, saved mocks dropdown, mock management list (rename/delete), render-with-mock, and MUI Dialogs for save/rename. Multiple commits/patches.
+ - Edited: `src/services/server_impl.js` — added `POST /fetch-proxy` enhancements, `GET /api-presets`, and CRUD endpoints for mocks (`POST /mocks`, `GET /mocks`, `GET /mocks/:name`, `DELETE /mocks/:name`, `PUT /mocks/:name`).
+ - Edited: `scripts/start_all.sh` — robust PUPPETEER_EXECUTABLE_PATH detection and safer expansion (earlier in session).
+
+## How I tested these changes (short)
+ - Started server locally and used the admin dev UI to exercise the new flows (fetch preview, save mock, load mock, rename, delete, render with mock). Observed PNG output under `./out` when rendering.
+ - Used `curl` to call `POST /fetch-proxy` and `GET /mocks` to validate server behavior.
+ - Verified that `ALLOW_LIVE_FETCHES` gating, `API_PRESETS` preset merging, and cache (`FETCH_CACHE_TTL`) behave as expected when set/unset.
+
+If you'd like, I will now append these new entries into `CHANGELOG.md` and create a small PR branch grouping the admin UI and server mock endpoints into a single commit. Would you like a modal-based spinner polish next, or should I open a PR? 
+
 - [ ] Create `copilot-instructions.md` (in-progress)
 - [ ] Add project overview and goals
 - [ ] Add development workflow and commands

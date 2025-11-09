@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { listJobs, getJob, retryJob, removeJob, setApiKey } from './api'
+import { listJobs, getJob, retryJob, removeJob } from './api'
 import RenderPlayer from './RenderPlayer'
+import ApiPage from './pages/ApiPage'
+import TemplatesPage from './pages/TemplatesPage'
+import RendererPage from './pages/RendererPage'
+import WorkflowPage from './pages/WorkflowPage'
 import { NotificationProvider } from './ui/NotificationProvider'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -25,9 +29,9 @@ export default function App() {
   const [jobs, setJobs] = useState([])
   const [selected, setSelected] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [apiKey, setKey] = useState(window.localStorage.getItem('postbot_api_key') || '')
+  // API key is managed on the API Console page now
   const [page, setPage] = useState(0)
-  const [route, setRoute] = useState('jobs') // 'jobs' | 'render-player'
+  const [route, setRoute] = useState('workflow') // 'api' | 'templates' | 'renderer' | 'workflow'
   const [limit] = useState(50)
 
   async function refresh() {
@@ -120,107 +124,29 @@ export default function App() {
       <CssBaseline />
       <NotificationProvider>
         <div className="app">
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Postbot — Admin
-              </Typography>
-              <Button color="inherit" onClick={() => { refresh(); setRoute('jobs') }} disabled={loading}>{loading ? 'Refreshing...' : 'Jobs'}</Button>
-              <Button color="inherit" onClick={() => setRoute('render-player')} sx={{ ml: 1 }}>Render Player Details</Button>
-              <TextField size="small" placeholder="API Key" value={apiKey} onChange={e => setKey(e.target.value)} variant="standard" sx={{ ml: 2, bgcolor: 'transparent' }} />
-              <Button color="inherit" onClick={saveKey} sx={{ ml: 1 }}>Save Key</Button>
-              <Button color="inherit" onClick={() => simulatePresigned()} sx={{ ml: 2 }}>Simulate S3 Presigned</Button>
-              <Button color="inherit" onClick={() => simulateOutPath()} sx={{ ml: 1 }}>Simulate outPath</Button>
-              <Button color="inherit" onClick={() => simulateAdminStaticRender()} sx={{ ml: 2 }}>Render Admin Static</Button>
+          <AppBar position="fixed">
+            <Toolbar variant="dense">
+              <Box sx={{display:'flex', alignItems:'center', gap:2}}>
+                <Typography variant="h6" component="div" sx={{fontWeight:600}}>
+                  Postbot — Admin
+                </Typography>
+              </Box>
+
+              <Box sx={{flex:1, display:'flex', justifyContent:'center', gap:2}}>
+                <Button color="inherit" onClick={() => setRoute('api')} sx={{ textTransform: 'none', borderBottom: route === 'api' ? '2px solid rgba(255,255,255,0.9)' : 'none' }}>API</Button>
+                <Button color="inherit" onClick={() => setRoute('templates')} sx={{ textTransform: 'none', borderBottom: route === 'templates' ? '2px solid rgba(255,255,255,0.9)' : 'none' }}>Rendered Templates</Button>
+                <Button color="inherit" onClick={() => setRoute('renderer')} sx={{ textTransform: 'none', borderBottom: route === 'renderer' ? '2px solid rgba(255,255,255,0.9)' : 'none' }}>Renderer</Button>
+                <Button color="inherit" onClick={() => setRoute('workflow')} sx={{ textTransform: 'none', borderBottom: route === 'workflow' ? '2px solid rgba(255,255,255,0.9)' : 'none' }}>Workflow</Button>
+              </Box>
+              {/* right side intentionally left empty; API key is managed on the API Console page */}
             </Toolbar>
           </AppBar>
 
+          {/* Toolbar spacer to offset fixed AppBar so main content sits below it */}
+          <Toolbar variant="dense" />
+
           <main>
-          {route === 'jobs' ? (
-            <>
-              <Box sx={{p:2}}>
-                <TableContainer component={Paper}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell>State</TableCell>
-                        <TableCell>Attempts</TableCell>
-                        <TableCell>Action</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {jobs.map(j => (
-                        <TableRow key={j.id} sx={{ '&.completed': { bgcolor: '#f6ffed' } }}>
-                          <TableCell>{j.id}</TableCell>
-                          <TableCell>{j.state}</TableCell>
-                          <TableCell>{j.attemptsMade}</TableCell>
-                          <TableCell>
-                            <Button size="small" onClick={() => showJob(j.id)}>View</Button>
-                            <Button size="small" sx={{ ml: 1 }} onClick={() => doRetry(j.id)}>Retry</Button>
-                            <Button size="small" sx={{ ml: 1 }} onClick={() => doRemove(j.id)}>Remove</Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Box>
-
-              <Box sx={{display:'flex', alignItems:'center', gap:2, px:2}}>
-                <Button onClick={prevPage} disabled={page === 0}>Prev</Button>
-                <Typography>Page {page + 1}</Typography>
-                <Button onClick={nextPage}>Next</Button>
-              </Box>
-
-              <Box sx={{p:2}}>
-                <Paper sx={{p:2}}>
-                  {selected ? (
-                    <div>
-                      <Typography variant="h6">Job {selected.id}</Typography>
-                      <Box sx={{mb:1}}>
-                        <Typography component="span" sx={{mr:1}}><strong>State:</strong></Typography>{selected.state}
-                        <Typography component="span" sx={{ml:2}}><strong>Attempts:</strong> {selected.attemptsMade}</Typography>
-                      </Box>
-                      <Box sx={{mb:1}}>
-                        {selected.result && selected.result.outPath ? (() => {
-                          try {
-                            const parts = selected.result.outPath.split(/\\|\//)
-                            const fn = parts[parts.length - 1]
-                            return (<div>Download: <Button size="small" onClick={async () => {
-                              try {
-                                const k = window.localStorage.getItem('postbot_api_key') || ''
-                                const res = await fetch(`/out/${encodeURIComponent(fn)}`, { headers: k ? { 'x-api-key': k } : {} })
-                                if (!res.ok) throw new Error('fetch failed')
-                                const blob = await res.blob()
-                                const url = URL.createObjectURL(blob)
-                                window.open(url, '_blank')
-                              } catch (err) { console.error(err) }
-                            }}>{fn}</Button></div>)
-                          } catch (e) { return null }
-                        })() : null}
-                        {selected.result && selected.result.s3 ? (() => {
-                          const s = selected.result.s3
-                          const presigned = s.presignedUrl
-                          const href = presigned || `https://${s.bucket}.s3.amazonaws.com/${encodeURIComponent(s.key)}`
-                          return (
-                            <div>
-                              <Typography component="span">S3: </Typography><code>{s.bucket}/{s.key}</code>
-                              &nbsp; <Link target="_blank" rel="noreferrer" href={href}>Open</Link>
-                              {presigned && s.expiresAt ? (<Typography component="span" sx={{ml:1}}> (expires {s.expiresAt})</Typography>) : null}
-                            </div>
-                          )
-                        })() : null}
-                      </Box>
-                      <Box component="pre" sx={{whiteSpace:'pre-wrap'}}>{JSON.stringify(selected, null, 2)}</Box>
-                    </div>
-                  ) : <div>Select a job to view details</div>}
-                </Paper>
-              </Box>
-            </>
-          ) : (
-            <RenderPlayer />
-          )}
+          {route === 'api' ? (<ApiPage />) : route === 'templates' ? (<TemplatesPage />) : route === 'renderer' ? (<RendererPage />) : (<WorkflowPage />)}
       </main>
         </div>
       </NotificationProvider>
