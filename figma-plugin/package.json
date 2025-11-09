@@ -4,10 +4,16 @@
   "private": true,
   "devDependencies": {
     "@figma/plugin-typings": "^1.117.1",
+    "esbuild": "^0.18.0",
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "build": "tsc -p .",
-    "watch": "tsc -w -p ."
+    "build": "npm run build:prod",
+    "build:dev": "esbuild code.ts --bundle --outfile=dist/code.js --loader:.html=text --platform=neutral --target=es2019 --sourcemap",
+    "build:prod": "esbuild code.ts --bundle --minify --outfile=dist/code.js --loader:.html=text --platform=neutral --target=es2019 --sourcemap",
+    "watch": "esbuild code.ts --bundle --outfile=dist/code.js --loader:.html=text --platform=neutral --target=es2019 --sourcemap --watch"
+  },
+  "dependencies": {
+    "postbot-renderer": "file:.."
   }
 }

@@ -8,7 +8,21 @@ const { startWorker } = require('../src/queue');
 		console.log(`Waiting for Redis at ${redisHost}:${redisPort}...`);
 		await waitForRedis(redisHost, redisPort, 40, 500);
 		console.log('Redis is available — starting worker');
-		startWorker();
+		const worker = startWorker();
+
+		// log process signals so we can see if something is killing the worker
+		process.on('SIGINT', () => {
+			console.log('[start_worker] SIGINT received');
+		});
+		process.on('SIGTERM', () => {
+			console.log('[start_worker] SIGTERM received');
+		});
+		process.on('uncaughtException', (err) => {
+			console.error('[start_worker] uncaughtException', err && err.stack ? err.stack : err);
+		});
+		process.on('unhandledRejection', (r) => {
+			console.error('[start_worker] unhandledRejection', r && r.stack ? r.stack : r);
+		});
 	} catch (e) {
 		console.error('Could not start worker — Redis unavailable', e);
 		process.exit(1);

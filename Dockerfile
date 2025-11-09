@@ -11,6 +11,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcairo2 \
     libnspr4 \
     libnss3 \
+    libdrm2 \
+    libgbm1 \
+    libxss1 \
+    libxkbcommon0 \
+    libpango1.0-0 \
+    libpangocairo-1.0-0 \
     libx11-6 \
     libx11-xcb1 \
     libxcomposite1 \
@@ -19,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxfixes3 \
     libxrandr2 \
     libxrender1 \
+    libcups2 \
     lsb-release \
     wget \
     gnupg \

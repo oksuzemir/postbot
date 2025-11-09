@@ -1,0 +1,11 @@
+:root{--bg:#f7f9fc;--card:#fff;--accent:#2563eb}
+body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); margin:0; color:#111}
+.app{max-width:1100px;margin:24px auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center}
+table{width:100%;border-collapse:collapse;background:var(--card);box-shadow:0 1px 0 rgba(0,0,0,0.04)}
+th,td{padding:8px 12px;border-bottom:1px solid #eee;text-align:left}
+tr.completed td{color:green}
+tr.failed td{color:#b91c1c}
+.details{margin-top:16px;background:var(--card);padding:12px}
+button{background:var(--accent);color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+button[disabled]{opacity:0.6}

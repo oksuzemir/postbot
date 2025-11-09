@@ -1,0 +1,6 @@
+
+> postbot-renderer@0.1.0 start
+> node src/server.js
+
+Renderer server listening on 3000
+[INCOMING] HEAD / origin= - host= localhost:3000 remote= ::ffff:127.0.0.1

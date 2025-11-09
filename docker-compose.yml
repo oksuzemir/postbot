@@ -1,9 +1,8 @@
-version: '3.8'
 services:
   renderer:
     build: .
     environment:
-      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chrome
+      - PUPPETE_EXECUTABLE_PATH=/usr/bin/chrome
     volumes:
       - ./:/usr/src/app
     command: ["node", "scripts/ci_check.js"]
@@ -16,9 +15,27 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chrome
+      - PUPPETE_EXECUTABLE_PATH=/usr/bin/chrome
     volumes:
       - ./:/usr/src/app
+      - ./out:/usr/src/app/out
     depends_on:
       - redis
     command: ["node", "scripts/start_worker.js"]
+  render-admin-static:
+    build: .
+    environment:
+      - PUPPETE_EXECUTABLE_PATH=/usr/bin/chrome
+    volumes:
+      - ./:/usr/src/app
+      - ./out:/usr/src/app/out
+    depends_on:
+      - redis
+    healthcheck:
+      test: ["CMD-SHELL", "if [ -x /usr/bin/chrome ]; then /usr/bin/chrome --version >/dev/null 2>&1; else exit 1; fi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    # This service is intended for one-off runs via `docker compose run --rm render-admin-static`
+    command: ["node", "scripts/render_with_admin_static.js", "--out", "/usr/src/app/out/admin_static.png"]

@@ -1,0 +1,33 @@
+{
+  "name": "postbot-admin",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5173",
+    "test": "node ./scripts/make_test_dirs.js && jest --runInBand --coverage --coverageDirectory=coverage --json --outputFile=test-results/results.json"
+  },
+  "dependencies": {
+    "@mui/icons-material": "^7.3.5",
+    "@mui/material": "^7.3.5",
+    "postbot-renderer": "file:..",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-react": "^7.22.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^15.0.0",
+    "@testing-library/user-event": "^14.0.0",
+    "babel-jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "vite": "^5.0.0"
+  }
+}

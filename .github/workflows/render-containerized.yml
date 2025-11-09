@@ -1,0 +1,45 @@
+name: Containerized Render Smoke Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  containerized-render:
+    name: Build & run containerized admin-static render
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Build render-admin-static image
+        run: |
+          docker compose build render-admin-static
+
+      - name: Start helper container (detached) and wait for Chrome health
+        run: |
+          # Start a detached helper container from the render-admin-static service but keep it alive with sleep
+          docker compose run -d --entrypoint sleep render-admin-static 300 || true
+          # Wait for the service to report healthy (script exits 0 on success)
+          ./scripts/wait_for_docker_health.sh render-admin-static 60
+
+      - name: Run the one-off render against the warmed image
+        run: |
+          # Execute the render in a transient container; output will be written to ./out on the host
+          docker compose run --rm render-admin-static
+          # Cleanup any stopped containers to keep runner tidy
+          docker compose ps --all || true
+          docker compose down --remove-orphans || true
+
+      - name: Show out dir
+        run: ls -la out || true
+
+      - name: Upload admin-static PNG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-static-render
+          path: out/admin_static.png
+          if-no-files-found: error

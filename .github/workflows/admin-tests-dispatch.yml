@@ -1,0 +1,41 @@
+name: admin-tests-dispatch
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  admin-tests-dispatch:
+    name: Run admin UI tests (manual)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache admin node_modules
+        uses: actions/cache@v4
+        with:
+          path: admin/node_modules
+          key: admin-node-modules-${{ runner.os }}-v1-${{ hashFiles('admin/package-lock.json') }}
+          restore-keys: |
+            admin-node-modules-${{ runner.os }}-v1-
+
+      - name: Install admin dependencies
+        run: npm --prefix admin ci
+
+      - name: Run admin tests
+        run: npm --prefix admin run test --silent
+
+      - name: Upload admin test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-test-artifacts
+          path: |
+            admin/test-results
+            admin/coverage
+          if-no-files-found: warn

@@ -1,3 +1,6 @@
 node_modules/
 out.png
 .env
+# Ignore bundled plugin output (built artifacts)
+dist/
+figma-plugin/dist/

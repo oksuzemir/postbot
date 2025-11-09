@@ -15,7 +15,11 @@ function buildLayerHtml(layer, mapping) {
     const src = key && mapping[key] ? mapping[key] : (layer.dataUri || '');
     const isCircle = layer.isEllipse || layer.shape === 'circle';
     const br = isCircle ? '50%' : (layer.cornerRadius ? `${layer.cornerRadius}px` : '0');
-    return `<img src="${esc(src)}" style="${styleBase}object-fit:cover;border-radius:${br};width:100%;height:100%;" />`;
+    // Wrap the image in a container so overflow: hidden clips the image to the layer bounds
+    // and border-radius is applied to the container (browsers don't clip an element by its own overflow)
+    const wrapperStyle = `${styleBase}overflow:hidden;border-radius:${br};`;
+    const imgStyle = `width:100%;height:100%;object-fit:cover;display:block;border:0;`;
+    return `<div style="${wrapperStyle}"><img src="${esc(src)}" style="${imgStyle}" /></div>`;
   }
   if (layer.type === 'text') {
     const key = layer.key;

@@ -1,0 +1,95 @@
+name: render-test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  render-test:
+    name: Run headless render smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache root node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-v1-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-v1-
+
+      - name: Install Chromium
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Optional: start render-admin-static service and wait for health (CI wait)
+        run: |
+          if command -v docker >/dev/null 2>&1; then
+            echo "Starting render-admin-static service..."
+            docker compose up -d render-admin-static || true
+            ./scripts/wait_for_docker_health.sh render-admin-static 60
+          else
+            echo "docker not available on runner; skipping render-admin-static startup"
+          fi
+      - name: Run render test only
+        # Use the system chromium binary path discovered at runtime
+        run: PUPPETEER_EXECUTABLE_PATH=$(which chromium) npm run test -- __tests__/render.test.js --runInBand
+
+      - name: Upload render artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-artifact
+          path: out/jest_render.png
+          if-no-files-found: warn
+
+  admin-tests:
+    name: Run admin UI tests
+    runs-on: ubuntu-latest
+    needs: render-test
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Cache admin node_modules
+        uses: actions/cache@v4
+        with:
+          path: admin/node_modules
+          key: admin-node-modules-${{ runner.os }}-v1-${{ hashFiles('admin/package-lock.json') }}
+          restore-keys: |
+            admin-node-modules-${{ runner.os }}-v1-
+
+      - name: Install admin dependencies
+        run: npm --prefix admin ci
+
+      - name: Run admin tests
+        run: |
+          set -e
+          npm --prefix admin run test --silent
+
+      - name: Upload admin test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-test-artifacts
+          path: |
+            admin/test-results
+            admin/coverage
+          if-no-files-found: warn

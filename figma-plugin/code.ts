@@ -7,7 +7,10 @@
   - Also supports exporting selected frame to a template JSON (backgroundImage, layers, etc.).
 */
 
-figma.showUI(__html__, { width: 720, height: 600 });
+// When building for Figma, bundle the `ui.html` file as a string and import it here.
+// This avoids relying on a bundler magic `__html__` global.
+import uiHtml from './ui.html';
+figma.showUI(uiHtml, { width: 720, height: 600 });
 
 /* ---------- Types & helpers ---------- */
 type FontSpec = { family: string; style: string | number; size: number };
